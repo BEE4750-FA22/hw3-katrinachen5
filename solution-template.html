@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<HTML lang = "en">
+<HEAD>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>BEE 4750&#x2F;5750 Homework 3</title>
+  
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: { autoNumber: "AMS" } }
+    });
+  </script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Menlo&family=Hind&family=Raleway&family=Yantramanav&display=swap');
+</style>
+
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+  
+<style>
+pre.hljl {
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 5px;
+    overflow-x: auto;
+    color: rgb(68,68,68); background-color: rgb(251,251,251); }
+pre.hljl > span.hljl-t { }
+pre.hljl > span.hljl-w { }
+pre.hljl > span.hljl-e { }
+pre.hljl > span.hljl-eB { }
+pre.hljl > span.hljl-o { }
+pre.hljl > span.hljl-k { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kc { color: rgb(59,151,46); font-style: italic; }
+pre.hljl > span.hljl-kd { color: rgb(214,102,97); font-style: italic; }
+pre.hljl > span.hljl-kn { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kp { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kr { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kt { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-n { }
+pre.hljl > span.hljl-na { }
+pre.hljl > span.hljl-nb { }
+pre.hljl > span.hljl-nbp { }
+pre.hljl > span.hljl-nc { }
+pre.hljl > span.hljl-ncB { }
+pre.hljl > span.hljl-nd { color: rgb(214,102,97); }
+pre.hljl > span.hljl-ne { }
+pre.hljl > span.hljl-neB { }
+pre.hljl > span.hljl-nf { color: rgb(66,102,213); }
+pre.hljl > span.hljl-nfm { color: rgb(66,102,213); }
+pre.hljl > span.hljl-np { }
+pre.hljl > span.hljl-nl { }
+pre.hljl > span.hljl-nn { }
+pre.hljl > span.hljl-no { }
+pre.hljl > span.hljl-nt { }
+pre.hljl > span.hljl-nv { }
+pre.hljl > span.hljl-nvc { }
+pre.hljl > span.hljl-nvg { }
+pre.hljl > span.hljl-nvi { }
+pre.hljl > span.hljl-nvm { }
+pre.hljl > span.hljl-l { }
+pre.hljl > span.hljl-ld { color: rgb(148,91,176); font-style: italic; }
+pre.hljl > span.hljl-s { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sa { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sb { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sc { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sd { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdC { color: rgb(201,61,57); }
+pre.hljl > span.hljl-se { color: rgb(59,151,46); }
+pre.hljl > span.hljl-sh { color: rgb(201,61,57); }
+pre.hljl > span.hljl-si { }
+pre.hljl > span.hljl-so { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sr { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ss { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ssB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-nB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nbB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nfB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nh { color: rgb(59,151,46); }
+pre.hljl > span.hljl-ni { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nil { color: rgb(59,151,46); }
+pre.hljl > span.hljl-noB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-oB { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-ow { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-p { }
+pre.hljl > span.hljl-c { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-ch { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cm { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cp { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cpB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cs { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-csB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-g { }
+pre.hljl > span.hljl-gd { }
+pre.hljl > span.hljl-ge { }
+pre.hljl > span.hljl-geB { }
+pre.hljl > span.hljl-gh { }
+pre.hljl > span.hljl-gi { }
+pre.hljl > span.hljl-go { }
+pre.hljl > span.hljl-gp { }
+pre.hljl > span.hljl-gs { }
+pre.hljl > span.hljl-gsB { }
+pre.hljl > span.hljl-gt { }
+</style>
+
+
+
+  <link rel="stylesheet" href="bee4750.css">
+</HEAD>
+
+<BODY>
+  <div class ="container">
+    <div class = "row">
+      <div class = "col-md-12 twelve columns">
+        <div class="title">
+          <h1 class="title">BEE 4750&#x2F;5750 Homework 3</h1>
+          <h2 class="title">Katrina Chen (kc778)</h2>
+          <h2 class="title">2022-10-17</h2>        
+
+        </div>
+    <hr class="title">
+
+
+        
+<!--  This setups the environment and installs packages, but doesn't appear in the generated document  -->
+
+
+<!--  You shouldn't need to modify this  -->
+
+
+
+
+<!-- - this block is hidden, but stores the generator and demand data; you can use a dataframe to combine these or refactor as you'd like  -->
+
+
+
+<h1>Problem 1</h1>
+<h2>Problem 1.1</h2>
+<p>There are multiple decision variables to consider. One decision variable is the installed capacity in MW of generator type g. Let this be <span class="math">$x_g$</span>. Another decision variable is the production in MW from generator type g in period t. Let this be <span class="math">$y_{g,t}$</span>. A third decision variable is considering the non-served energy in MWh in each period t. Let this be <span class="math">$z_t$</span>.</p>
+<p>The problem consisted of 6 different generator types: geothermal, coal, CCGT, CT, wind, and solar.  A period is 24 hours, counting by hours &#40;ie <span class="math">$t=1$</span> means 1 hour&#41;. </p>
+
+<pre class='hljl'>
+<span class='hljl-nB'>julia&gt; </span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>JuMP</span><span class='hljl-t'>
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>HiGHS</span><span class='hljl-t'>
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>energy_model</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Model</span><span class='hljl-p'>(</span><span class='hljl-n'>HiGHS</span><span class='hljl-oB'>.</span><span class='hljl-n'>Optimizer</span><span class='hljl-p'>)</span><span class='hljl-t'>
+A JuMP Model
+Feasibility problem with:
+Variables: 0
+Model mode: AUTOMATIC
+CachingOptimizer state: EMPTY_OPTIMIZER
+Solver name: HiGHS
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>generators</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-s'>&quot;geothermal&quot;</span><span class='hljl-p'>,</span><span class='hljl-s'>&quot;coal&quot;</span><span class='hljl-p'>,</span><span class='hljl-s'>&quot;CCGT&quot;</span><span class='hljl-p'>,</span><span class='hljl-s'>&quot;CT&quot;</span><span class='hljl-p'>,</span><span class='hljl-s'>&quot;wind&quot;</span><span class='hljl-p'>,</span><span class='hljl-s'>&quot;solar&quot;</span><span class='hljl-p'>];</span><span class='hljl-t'>
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>period</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>:</span><span class='hljl-ni'>24</span><span class='hljl-p'>;</span><span class='hljl-t'>
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>g</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>:</span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>generators</span><span class='hljl-p'>);</span><span class='hljl-t'>
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>t</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>:</span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>period</span><span class='hljl-p'>);</span><span class='hljl-t'>
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-nd'>@variable</span><span class='hljl-p'>(</span><span class='hljl-n'>energy_model</span><span class='hljl-p'>,</span><span class='hljl-n'>x</span><span class='hljl-p'>[</span><span class='hljl-n'>g</span><span class='hljl-p'>]</span><span class='hljl-oB'>&gt;=</span><span class='hljl-ni'>0</span><span class='hljl-p'>);</span><span class='hljl-t'>
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-nd'>@variable</span><span class='hljl-p'>(</span><span class='hljl-n'>energy_model</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>[</span><span class='hljl-n'>g</span><span class='hljl-p'>,</span><span class='hljl-n'>t</span><span class='hljl-p'>]</span><span class='hljl-oB'>&gt;=</span><span class='hljl-ni'>0</span><span class='hljl-p'>);</span><span class='hljl-t'>
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-nd'>@variable</span><span class='hljl-p'>(</span><span class='hljl-n'>energy_model</span><span class='hljl-p'>,</span><span class='hljl-n'>z</span><span class='hljl-p'>[</span><span class='hljl-n'>t</span><span class='hljl-p'>]</span><span class='hljl-oB'>&gt;=</span><span class='hljl-ni'>0</span><span class='hljl-p'>)</span><span class='hljl-t'>;</span>
+</pre>
+
+<h2>Problem 1.2</h2>
+<p>The objective of this problem is to minimize the total costs for capacity expansion. The total cost includes investment cost, operating cost, and the cost of non-served energy. </p>
+<p>Let <span class="math">$C_g^{INV}$</span> be the investment cost for a generator g, <span class="math">$C_g^{OP}$</span> be the operating cost for a generator g, and <span class="math">$C_t^{NS}$</span> be the the non-served energy cost for time period t. Also, let <span class="math">$L_t$</span> be the length of the time period t. With these variables, we can model the cost as:</p>
+<p class="math">\[
+minZ = \sum_g C_g^{INV} x_g + \sum_g \sum_t L_t C_g^{OP} y_{g,t} + \sum_t C_t^{NS} L_t z_t
+\]</p>
+
+<pre class='hljl'>
+<span class='hljl-nB'>julia&gt; </span><span class='hljl-nd'>@objective</span><span class='hljl-p'>(</span><span class='hljl-n'>energy_model</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Min</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>457000</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>268000</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>85000</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>62580</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>92000</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>92000</span><span class='hljl-p'>]</span><span class='hljl-oB'>&#39;</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-nf'>sum</span><span class='hljl-p'>(</span><span class='hljl-ni'>365</span><span class='hljl-oB'>*</span><span class='hljl-ni'>24</span><span class='hljl-oB'>*</span><span class='hljl-n'>y</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-oB'>:</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>365</span><span class='hljl-oB'>*</span><span class='hljl-ni'>35</span><span class='hljl-oB'>*</span><span class='hljl-n'>y</span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-oB'>:</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>365</span><span class='hljl-oB'>*</span><span class='hljl-ni'>45</span><span class='hljl-oB'>*</span><span class='hljl-n'>y</span><span class='hljl-p'>[</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-oB'>:</span><span class='hljl-p'>])</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-ni'>365</span><span class='hljl-oB'>*</span><span class='hljl-ni'>1000</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sum</span><span class='hljl-p'>(</span><span class='hljl-n'>z</span><span class='hljl-p'>)))</span><span class='hljl-t'>
+457000 x[1] + 268000 x[2] + 85000 x[3] + 62580 x[4] + 92000 x[5] + 92000 x[6] + 8760 y[2,1] + 12775 y[3,1] + 16425 y[4,1] + 8760 y[2,2] + 12775 y[3,2] + 16425 y[4,2] + 8760 y[2,3] + 12775 y[3,3] + 16425 y[4,3] + 8760 y[2,4] + 12775 y[3,4] + 16425 y[4,4] + 8760 y[2,5] + 12775 y[3,5] + 16425 y[4,5] + 8760 y[2,6] + 12775 y[3,6] + 16425 y[4,6] + 8760 y[2,7] + 12775 y[3,7] + 16425 y[4,7] + 8760 y[2,8] + 12775 y[3,8] + 16425 y[4,8] + 8760 y[2,9] + 12775 y[3,9] + 16425 y[4,9] + 8760 y[2,10] + 12775 y[3,10] + 16425 y[4,10] + 8760 y[2,11] + 12775 y[3,11] + 16425 y[4,11] + 8760 y[2,12] + 12775 y[3,12] + 16425 y[4,12] + 8760 y[2,13] + 12775 y[3,13] + 16425 y[4,13] + 8760 y[2,14] + 12775 y[3,14] + 16425 y[4,14] + 8760 y[2,15] + 12775 y[3,15] + 16425 y[4,15] + 8760 y[2,16] + 12775 y[3,16] + 16425 y[4,16] + 8760 y[2,17] + 12775 y[3,17] + 16425 y[4,17] + 8760 y[2,18] + 12775 y[3,18] + 16425 y[4,18] + 8760 y[2,19] + 12775 y[3,19] + 16425 y[4,19] + 8760 y[2,20] + 12775 y[3,20] + 16425 y[4,20] + 8760 y[2,21] + 12775 y[3,21] + 16425 y[4,21] + 8760 y[2,22] + 12775 y[3,22] + 16425 y[4,22] + 8760 y[2,23] + 12775 y[3,23] + 16425 y[4,23] + 8760 y[2,24] + 12775 y[3,24] + 16425 y[4,24] + 365000 z[1] + 365000 z[2] + 365000 z[3] + 365000 z[4] + 365000 z[5] + 365000 z[6] + 365000 z[7] + 365000 z[8] + 365000 z[9] + 365000 z[10] + 365000 z[11] + 365000 z[12] + 365000 z[13] + 365000 z[14] + 365000 z[15] + 365000 z[16] + 365000 z[17] + 365000 z[18] + 365000 z[19] + 365000 z[20] + 365000 z[21] + 365000 z[22] + 365000 z[23] + 365000 z[24]</span>
+</pre>
+
+<h2>Problem 1.3</h2>
+<h2>Problem 1.4</h2>
+
+<pre class='hljl'>
+<span class='hljl-nB'>julia&gt; </span><span class='hljl-nf'>optimize!</span><span class='hljl-p'>(</span><span class='hljl-n'>energy_model</span><span class='hljl-p'>)</span><span class='hljl-t'>
+Presolving model
+0 rows, 0 cols, 0 nonzeros
+0 rows, 0 cols, 0 nonzeros
+Presolve : Reductions: rows 0(-0); columns 0(-174); elements 0(-0) - Reduced to empty
+Solving the original LP from the solution after postsolve
+Solving an unconstrained LP with 174 columns
+Model   status      : Optimal
+Objective value     :  0.0000000000e+00
+HiGHS run time      :          0.00</span>
+</pre>
+
+<h2>Problem 1.5</h2>
+<h2>Problem 1.6</h2>
+<h1>Problem 2</h1>
+<h2>Problem 2.1</h2>
+<h2>Problem 2.2</h2>
+<h2>Problem 2.3</h2>
+<h2>Problem 2.4</h2>
+<h2>Problem 2.5</h2>
+<h1>References</h1>
+
+
+    <hr class="title">
+      </div>
+    </div>
+  </div>
+</BODY>
+
+</HTML>

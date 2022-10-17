@@ -50,12 +50,12 @@ energy_model = Model(HiGHS.Optimizer)
 generators = ["geothermal","coal","CCGT","CT","wind","solar"];
 period = 1:24;
 
-g = 1:length(generators);
-t = 1:length(period);
+G = 1:length(generators);
+T = 1:length(period);
 
-@variable(energy_model,x[g]>=0);
-@variable(energy_model,y[g,t]>=0);
-@variable(energy_model,z[t]>=0);
+@variable(energy_model,x[G]>=0);
+@variable(energy_model,y[G,T]>=0);
+@variable(energy_model,z[T]>=0);
 ```
 
 ## Problem 1.2
@@ -70,14 +70,43 @@ With these variables, we can model the cost as:
 minZ = \sum_g C_g^{INV} x_g + \sum_g \sum_t L_t C_g^{OP} y_{g,t} + \sum_t C_t^{NS} L_t z_t
 ```
 ```julia
-@objective(energy_model, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x + 365 * 1000 * sum(z))
-
-
-
+@objective(energy_model, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x + sum(365*22*y[2,:] + 365*35*y[3,:] + 365*45*y[4,:]) + (365*1000*sum(z)))
 ```
 
 ## Problem 1.3
+One constraint is that generators cannot produce more than their capacity factor. 
+For example, for the wind generator at 1 hour,
+```math
+y_{wind,1} <= 0.58 * x_wind
+```
 
+Another constraint is that they need to serve enough energy to meet the demand. 
+```math
+demand = sum_{g} y_{g,t} + z_t 
+```
+
+Another constraint is that the variables cannot be negative.
+```math
+x_g >= 0
+y_{g,t} >= 0
+z_t >= 0
+```
+
+
+```julia
+avail = zeros(length(G),length(T));
+
+avail[1, :] .= thermal_cf[1];
+avail[2, :] .= thermal_cf[2];
+avail[3, :] .= thermal_cf[3];
+avail[4, :] .= thermal_cf[4];
+avail[5, :] = wind_cf;
+avail[6, :] = solar_cf;
+
+@constraint(energy_model,availability[g in G, t in T], y[g,t] <= avail[g,t]*x[g]);
+
+@contraint(energy_model,load[t in T], sum(y[:, t]) == demand[t])
+```
 
 ## Problem 1.4
 ```julia
@@ -88,6 +117,7 @@ optimize!(energy_model)
 
 
 ## Problem 1.6
+
 
 
 # Problem 2
