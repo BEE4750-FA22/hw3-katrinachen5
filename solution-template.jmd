@@ -77,23 +77,23 @@ minZ = \sum_g C_g^{INV} x_g + \sum_g \sum_t L_t C_g^{OP} y_{g,t} + \sum_t C_t^{N
 One constraint is that generators cannot produce more than their capacity factor. 
 For example, for the wind generator at 1 hour,
 ```math
-y_{wind,1} <= 0.58 * x_wind
+y_{wind,1} ≤ 0.58 * x_{wind}
 ```
 
 Another constraint is that they need to serve enough energy to meet the demand. 
 ```math
-demand = sum_{g} y_{g,t} + z_t 
+demand = \sum_{g} y_{g,t} + z_t 
 ```
 
 Another constraint is that the variables cannot be negative.
 ```math
-x_g >= 0
-y_{g,t} >= 0
-z_t >= 0
+x_g ≥ 0 \\
+y_{g,t} ≥ 0 \\
+z_t ≥ 0 \\
 ```
 
-
 ```julia
+
 avail = zeros(length(G),length(T));
 
 avail[1, :] .= thermal_cf[1];
@@ -103,9 +103,9 @@ avail[4, :] .= thermal_cf[4];
 avail[5, :] = wind_cf;
 avail[6, :] = solar_cf;
 
-@constraint(energy_model,availability[g in G, t in T], y[g,t] <= avail[g,t]*x[g]);
+@constraint(energy_model,availability[g in G, t in T], y[g,t] <= avail[g,t]*x[g])
 
-@contraint(energy_model,load[t in T], sum(y[:, t]) == demand[t])
+@constraint(energy_model,load[t in T], sum(y[:, t]) == demand[t])
 ```
 
 ## Problem 1.4
@@ -114,22 +114,72 @@ optimize!(energy_model)
 ```
 
 ## Problem 1.5
+```julia
+build = value.(x);
+cost = objective_value(energy_model);
+nonserve = sum(value.(z));
+```
 
+The ultility needs to build generators to provide for the following amounts in MW. 
+The values correspond to geothermal, coal , CCGT, CT, wind, and solar respectively.
+```julia
+print(build)
+```
+
+The total cost in dollars will be
+```julia
+print(cost)
+```
+
+The nonserved energy in MW will be
+```julia
+print(nonserve)
+```
 
 ## Problem 1.6
+```julia
+using Plots
 
+g = value.(y).data
+
+L = plot(g', label=permutedims(generators), xlabel = "Time of day (hr)", ylabel ="Generated Electricity (MW)", title = "Raw Amounts of Generated Electricity")
+
+A = areaplot(g', label=permutedims(generators), xlabel = "Time of day (hr)", ylabel ="Generated Electricity (MW)", title = "Aggregated Amounts of Generated Electricity");
+
+D = plot!(demand, color=:red, label="demand", linewidth = 5)
+```
 
 
 # Problem 2
 
 ## Problem 2.1
+```julia
+
+```
 
 ## Problem 2.2
+```julia
+
+```
 
 ## Problem 2.3
+```julia
+
+```
 
 ## Problem 2.4
+```julia
+
+```
 
 ## Problem 2.5
 
+
 # References
+Lecture notes 9, 11, and 12 from https://viveks.me/environmental-systems-analysis/schedule/
+
+https://tex.stackexchange.com/questions/46189/how-do-i-add-a-line-break-in-display-math-mode
+
+https://docs.juliaplots.org/latest/attributes/
+
+
