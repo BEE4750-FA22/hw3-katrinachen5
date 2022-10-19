@@ -150,29 +150,83 @@ D = plot!(demand, color=:red, label="demand", linewidth = 5)
 ```
 
 
+
 # Problem 2
 
 ## Problem 2.1
-```julia
+For problem 2, we need to now consider the $CO_2$ emissions from each of the different generators. 
+We also need to add another constraint to ensure that the $CO_2$ emissions do not exceed $1.5  Mt CO_2 /yr$
 
+```julia
+energy_model_cd = Model(HiGHS.Optimizer)
+
+@variable(energy_model_cd,x_cd[G]>=0);
+@variable(energy_model_cd,y_cd[G,T]>=0);
+@variable(energy_model_cd,z_cd[T]>=0);
+
+@objective(energy_model_cd, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x_cd + sum(365*22*y_cd[2,:] + 365*35*y_cd[3,:] + 365*45*y_cd[4,:]) + (365*1000*sum(z_cd)));
+
+@constraint(energy_model_cd,availability[g in G, t in T], y_cd[g,t] <= avail[g,t]*x_cd[g]);
+@constraint(energy_model_cd,load[t in T], sum(y_cd[:, t]) == demand[t]);
+
+
+cd = sum(co2_emissions'*y_cd)
+
+@constraint(energy_model_cd, co2, cd <= (1.5*10^6)/365)
 ```
 
 ## Problem 2.2
 ```julia
-
+optimize!(energy_model_cd)
 ```
 
 ## Problem 2.3
 ```julia
-
+build_cd = value.(x_cd);
 ```
+
+When considering the $CO_2$ the ultility needs to build generators to provide for the following amounts in MW. 
+The values correspond to geothermal, coal , CCGT, CT, wind, and solar respectively.
+```julia
+print(build_cd)
+```
+
+
 
 ## Problem 2.4
 ```julia
+g_cd = value.(y_cd).data
 
+L_cd = plot(g_cd', label=permutedims(generators), xlabel = "Time of day (hr)", ylabel ="Generated Electricity (MW)", title = "Raw Amounts of Generated Electricity")
+
+A_cd = areaplot(g_cd', label=permutedims(generators), xlabel = "Time of day (hr)", ylabel ="Generated Electricity (MW)", title = "Aggregated Amounts of Generated Electricity");
+
+D_cd = plot!(demand, color=:red, label="demand", linewidth = 5)
 ```
 
 ## Problem 2.5
+```julia
+energy_model_cd2 = Model(HiGHS.Optimizer)
+
+@variable(energy_model_cd2,x_cd2[G]>=0);
+@variable(energy_model_cd2,y_cd2[G,T]>=0);
+@variable(energy_model_cd2,z_cd2[T]>=0);
+
+@objective(energy_model_cd2, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x_cd2 + sum(365*22*y_cd2[2,:] + 365*35*y_cd2[3,:] + 365*45*y_cd2[4,:]) + (365*1000*sum(z_cd2)));
+
+@constraint(energy_model_cd2, availability[g in G, t in T], y_cd2[g,t] <= avail[g,t]*x_cd2[g]);
+@constraint(energy_model_cd2, load[t in T], sum(y_cd2[:, t]) == demand[t]);
+
+
+cd2 = sum(co2_emissions'*y_cd2);
+
+@constraint(energy_model_cd2, co2, cd2 <= (1.5*10^6 + 1000)/365)
+
+optimize!(energy_model_cd2)
+
+build_cd = value.(x_cd2)
+
+```
 
 
 # References
@@ -181,5 +235,9 @@ Lecture notes 9, 11, and 12 from https://viveks.me/environmental-systems-analysi
 https://tex.stackexchange.com/questions/46189/how-do-i-add-a-line-break-in-display-math-mode
 
 https://docs.juliaplots.org/latest/attributes/
+
+https://jump.dev/JuMP.jl/stable/manual/variables/
+
+https://jump.dev/JuMP.jl/stable/manual/constraints/
 
 
