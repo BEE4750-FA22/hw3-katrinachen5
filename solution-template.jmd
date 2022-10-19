@@ -105,7 +105,7 @@ avail[6, :] = solar_cf;
 
 @constraint(energy_model, availability[g in G, t in T], y[g,t] <= avail[g,t]*x[g])
 
-@constraint(energy_model, load[t in T], sum(y[:, t]) == demand[t])
+@constraint(energy_model, load[t in T], sum(y[:, t]) + sum(z[t]) == demand[t])
 ```
 
 ## Problem 1.4
@@ -172,7 +172,7 @@ energy_model_cd = Model(HiGHS.Optimizer)
 @objective(energy_model_cd, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x_cd + sum(365*22*y_cd[2,:] + 365*35*y_cd[3,:] + 365*45*y_cd[4,:]) + (365*1000*sum(z_cd)));
 
 @constraint(energy_model_cd,availability[g in G, t in T], y_cd[g,t] <= avail[g,t]*x_cd[g]);
-@constraint(energy_model_cd,load[t in T], sum(y_cd[:, t]) == demand[t]);
+@constraint(energy_model_cd,load[t in T], sum(y_cd[:, t]) + sum(z_cd[t]) == demand[t]);
 
 
 cd = sum(co2_emissions'*y_cd)
@@ -229,7 +229,7 @@ energy_model_cd2 = Model(HiGHS.Optimizer)
 @objective(energy_model_cd2, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x_cd2 + sum(365*22*y_cd2[2,:] + 365*35*y_cd2[3,:] + 365*45*y_cd2[4,:]) + (365*1000*sum(z_cd2)));
 
 @constraint(energy_model_cd2, availability[g in G, t in T], y_cd2[g,t] <= avail[g,t]*x_cd2[g]);
-@constraint(energy_model_cd2, load[t in T], sum(y_cd2[:, t]) == demand[t]);
+@constraint(energy_model_cd2, load[t in T], sum(y_cd2[:, t]) + sum(z_cd2[t]) == demand[t]);
 
 
 cd2 = sum(co2_emissions'*y_cd2);
