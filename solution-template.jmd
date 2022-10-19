@@ -67,10 +67,10 @@ Also, let $L_t$ be the length of the time period t.
 With these variables, we can model the total cost as:
 
 ```math
-minZ = \sum_g C_g^{INV} x_g + \sum_g \sum_t L_t C_g^{OP} y_{g,t} + \sum_t C_t^{NS} L_t z_t
+min cost = \sum_g C_g^{INV} x_g + \sum_g \sum_t L_t C_g^{OP} y_{g,t} + \sum_t L_t C_t^{NS} z_t
 ```
 ```julia
-@objective(energy_model, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x + sum(365*22*y[2,:] + 365*35*y[3,:] + 365*45*y[4,:]) + (365*1000*sum(z)))
+@objective(energy_model, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x + sum(365*22*y[2,:] + 365*35*y[3,:] + 365*45*y[4,:]) + (365*1000*sum(z)));
 ```
 
 ## Problem 1.3
@@ -86,7 +86,7 @@ The demand at hour t will be,
 demand_t = \sum_{g} y_{g,t} + z_t 
 ```
 
-Another constraint is that the variables cannot be negative.
+Another constraint is that the variables cannot be negative. This is considered when we defined the vairables.
 ```math
 x_g ≥ 0 \\
 y_{g,t} ≥ 0 \\
@@ -103,9 +103,9 @@ avail[4, :] .= thermal_cf[4];
 avail[5, :] = wind_cf;
 avail[6, :] = solar_cf;
 
-@constraint(energy_model, availability[g in G, t in T], y[g,t] <= avail[g,t]*x[g])
+@constraint(energy_model, availability[g in G, t in T], y[g,t] <= avail[g,t]*x[g]);
 
-@constraint(energy_model, load[t in T], sum(y[:, t]) + sum(z[t]) == demand[t])
+@constraint(energy_model, load[t in T], sum(y[:, t]) + sum(z[t]) == demand[t]);
 ```
 
 ## Problem 1.4
@@ -149,7 +149,7 @@ A = areaplot(g', label=permutedims(generators), xlabel = "Time of day (hr)", yla
 D = plot!(demand, color=:red, label="demand", linewidth = 5)
 ```
 
-A key takeawy is that during the day, almost all of the generated electricity is from solar power, likely because that is when there is most sunlight.
+A key takeaway is that during the day, almost all of the generated electricity is from solar power, likely because that is when there is most sunlight.
 Wind energy provides the most when there is no solar power. This could be because it is usually more windy at night when there is no sunlight. 
 CCGT is a large source of generated electricity during off hours to help reach the demand where the wind power does not. 
 Similarly, the CT also helps out when the wind energy is lacking.
@@ -160,24 +160,19 @@ There is no geothermal nor coal providing any electricity.
 
 ## Problem 2.1
 For problem 2, we need to now consider the $CO_2$ emissions from each of the different generators. 
-We also need to add another constraint to ensure that the $CO_2$ emissions do not exceed $1.5  Mt CO_2 /yr$
+We also need to add another constraint to ensure that the $CO_2$ emissions do not exceed 1.5 $Mt CO_2 /yr$
 
 ```julia
 energy_model_cd = Model(HiGHS.Optimizer)
-
 @variable(energy_model_cd,x_cd[G]>=0);
 @variable(energy_model_cd,y_cd[G,T]>=0);
 @variable(energy_model_cd,z_cd[T]>=0);
-
 @objective(energy_model_cd, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x_cd + sum(365*22*y_cd[2,:] + 365*35*y_cd[3,:] + 365*45*y_cd[4,:]) + (365*1000*sum(z_cd)));
-
 @constraint(energy_model_cd,availability[g in G, t in T], y_cd[g,t] <= avail[g,t]*x_cd[g]);
 @constraint(energy_model_cd,load[t in T], sum(y_cd[:, t]) + sum(z_cd[t]) == demand[t]);
 
 
-cd = sum(co2_emissions'*y_cd)
-
-@constraint(energy_model_cd, co2, cd <= (1.5*10^6)/365)
+@constraint(energy_model_cd, co2, sum(co2_emissions'*y_cd) <= (1.5*10^6)/365);
 ```
 
 ## Problem 2.2
@@ -189,14 +184,12 @@ optimize!(energy_model_cd)
 ```julia
 build_cd = value.(x_cd);
 ```
-
 When considering the $CO_2$ emissions and limit, the ultility needs to build generators to provide for the following amounts in MW. 
 The six values correspond to geothermal, coal , CCGT, CT, wind, and solar generators respectively.
 ```julia
 print(build_cd)
 ```
-
-One of the largest differences is that there is now a good amount of electricity being provided by a geothermal generator. 
+One of the largest differences is that there is now a good amount of electricity being provided by a geothermal generator., likely because it produces no $CO_2$ emissions. 
 There is still no coal providing electricity, like in problem 1. 
 For CCGT, CT, wind, and solar generators, all the amounts of electricity prrovided decreased slighty from problem 1.
 Similar to problem 1, the most amount of electricity is still from the solar generator. 
@@ -204,49 +197,35 @@ Similar to problem 1, the most amount of electricity is still from the solar gen
 ## Problem 2.4
 ```julia
 g_cd = value.(y_cd).data;
-
 L_cd = plot(g_cd', label=permutedims(generators), xlabel = "Time of day (hr)", ylabel ="Generated Electricity (MW)", title = "Raw Amounts of Generated Electricity")
-
 A_cd = areaplot(g_cd', label=permutedims(generators), xlabel = "Time of day (hr)", ylabel ="Generated Electricity (MW)", title = "Aggregated Amounts of Generated Electricity");
-
 D_cd = plot!(demand, color=:red, label="demand", linewidth = 5)
 ```
-
 Similar to problem 1, we see that during the day, the majrority of the electrticity is due to the solar generator, likely due to the sunlight in the day.
 We also see a similar pattern where the wind enery provides more when it is night and more windy.
 There are also peaks of CCGT electricity to help reach the demand when there is not a lot of wind energy. 
 The biggest difference is that there is now a pretty consistent and large amount of geothermal energy being provided the entire 24 hours, which was not there in problem 1.
 
-
 ## Problem 2.5
 ```julia
 energy_model_cd2 = Model(HiGHS.Optimizer)
-
 @variable(energy_model_cd2,x_cd2[G]>=0);
 @variable(energy_model_cd2,y_cd2[G,T]>=0);
 @variable(energy_model_cd2,z_cd2[T]>=0);
-
 @objective(energy_model_cd2, Min, [457000, 268000, 85000, 62580, 92000, 92000]' * x_cd2 + sum(365*22*y_cd2[2,:] + 365*35*y_cd2[3,:] + 365*45*y_cd2[4,:]) + (365*1000*sum(z_cd2)));
-
 @constraint(energy_model_cd2, availability[g in G, t in T], y_cd2[g,t] <= avail[g,t]*x_cd2[g]);
 @constraint(energy_model_cd2, load[t in T], sum(y_cd2[:, t]) + sum(z_cd2[t]) == demand[t]);
 
-
-cd2 = sum(co2_emissions'*y_cd2);
-
-@constraint(energy_model_cd2, co2, cd2 <= (1.5*10^6 + 1000)/365)
-
+@constraint(energy_model_cd2, co2, sum(co2_emissions'*y_cd2) <= (1.5*10^6 + 1000)/365);
 optimize!(energy_model_cd2)
-
 build_cd2 = value.(x_cd2);
 ```
-
 When considering the $CO_2$ emissions with extnding the limit, the ultility needs to build generators to provide for the following amounts in MW. 
 The six values correspond to geothermal, coal , CCGT, CT, wind, and solar generators respectively.
-
 ```julia
 print(build_cd2)
 ```
+
 
 
 # References
